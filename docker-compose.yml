@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+    backend:
+      container_name: backend
+      environment:
+        - PGDATABASE=postgres
+        - PGHOST=data
+        - PGPORT=5432
+        - PGUSER=postgres
+        - VIRTUAL_HOST=efktrapi.dallago.us
+      image: 'efktr/backend:latest'
+      links:
+        - data
+    data:
+      container_name: data
+      image: 'efktr/data:latest'
+    frontend:
+      container_name: frontend
+      environment:
+        - REACT_APP_API=http://efktrapi.dallago.us
+        - VIRTUAL_HOST=efktr.dallago.us
+      image: 'efktr/frontend:latest'
+    nginx-proxy:
+      container_name: nginx-proxy
+      image: jwilder/nginx-proxy:latest
+      ports:
+        - "80:80"
+        - "443:443"
+      volumes:
+        - /var/run/docker.sock:/tmp/docker.sock:ro
