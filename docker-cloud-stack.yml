@@ -15,7 +15,6 @@ data:
 frontend:
   autoredeploy: true
   environment:
-    - 'REACT_APP_API=http://efktrapi.dallago.us'
     - VIRTUAL_HOST=efktr.dallago.us
   image: 'efktr/frontend:latest'
 nginx-proxy:
